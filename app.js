@@ -2,10 +2,11 @@
 const WHOP_URL = 'https://whop.com/'; // ponytail: placeholder until the artists' WHOP page exists
 const EMAIL = 'forthelovestudio2025@gmail.com';
 
-// sale: 0.5 = -50%. limited: shows LIMITED badge. New drop = new line here.
+// sale: 0.5 = -50%. limited: shows LIMITED badge. soon: placeholder card, not orderable. New drop = new line here.
 const PRODUCTS = [
   { id: 'crewneck', line: 'DROP 01 — FOR THE LOVE', name: 'Red Crewneck', price: 95, sale: null, limited: true, sizes: ['S', 'M', 'L', 'XL'], img: 'assets/p8057.jpg' },
-  { id: 'baad-pants', line: 'BAAD', name: 'BAAD Pants', price: 120, sale: null, limited: false, sizes: ['S', 'M', 'L', 'XL'], img: 'assets/pants.jpg' },
+  // TODO: new pants — add photo, name, price, sizes and remove `soon`
+  { id: 'new-pants', line: 'NEW CLOTHING IS OUT NOW', name: 'New Pants', soon: true },
 ];
 
 // Approved guestbook entries (signatures arrive by email; paste the good ones here).
@@ -25,8 +26,9 @@ document.querySelectorAll('.whop').forEach(a => { a.href = WHOP_URL; a.target = 
 // Shop: group by line
 const lines = [...new Set(PRODUCTS.map(p => p.line))];
 document.getElementById('lines').innerHTML = lines.map(line => `
-  <div class="line-head"><span>${line}</span><span>${PRODUCTS.filter(p => p.line === line).length} ITEM(S)</span></div>
-  <div class="products">${PRODUCTS.filter(p => p.line === line).map(p => `
+  <div class="line-head"><span>${line}</span></div>
+  <div class="products">${PRODUCTS.filter(p => p.line === line).map(p => p.soon ? `
+    <div class="card soon"><div class="ph"><span>COMING SOON</span></div><div class="meta"><span>${p.name}</span></div></div>` : `
     <button class="card" data-product="${p.id}">
       <div class="ph"><img src="${p.img}" alt="${p.name}" loading="lazy">
         ${p.sale ? `<span class="badge">-${Math.round(p.sale * 100)}%</span>` : p.limited ? '<span class="badge">LIMITED</span>' : ''}</div>

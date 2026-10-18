@@ -81,6 +81,8 @@ h2 { font-size: 13px; letter-spacing: .12em; margin-bottom: 24px; }
 .card .ph { position: relative; aspect-ratio: 3/4; overflow: hidden; }
 .card img { height: 100%; object-fit: cover; transition: transform .6s; }
 .card:hover img { transform: scale(1.04); }
+.card.soon { cursor: default; }
+.card.soon .ph { display: grid; place-items: center; background: var(--red); color: #fff; font-size: 12px; font-weight: 700; letter-spacing: .14em; }
 .badge { position: absolute; top: 10px; left: 10px; background: var(--red); padding: 4px 8px; font-size: 10px; font-weight: 700; letter-spacing: .12em; }
 .card .meta { display: flex; justify-content: space-between; padding-top: 10px; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
 s { opacity: .5; margin-right: 6px; }
