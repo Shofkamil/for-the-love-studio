@@ -1,5 +1,6 @@
 // ---- Edit here ----
-const WHOP_URL = 'https://whop.com/'; // ponytail: placeholder until the artists' WHOP page exists
+const WHOP_URL = 'https://whop.com/for-the-love-studio/';
+const SKILL_URL = 'https://whop.com/joined/for-the-love-studio/courses-O8PvF68SjATrHJ/app/courses/cors_UnneQR3dB6jg8/lessons/lesn_xovOZA1YxGDb9/';
 const EMAIL = 'forthelovestudio2025@gmail.com';
 
 // sale: 0.5 = -50%. limited: shows LIMITED badge. soon: placeholder card, not orderable. New drop = new line here.
@@ -21,7 +22,9 @@ const priceHTML = p => p.sale ? `<s>${eur(p.price)}</s>${eur(finalPrice(p))}` : 
 const esc = s => String(s).replace(/[&<>"']/g, c => `&#${c.charCodeAt(0)};`);
 console.assert(finalPrice({ price: 95, sale: 0.5 }) === 47.5 && finalPrice({ price: 120, sale: null }) === 120, 'sale math');
 
-document.querySelectorAll('.whop').forEach(a => { a.href = WHOP_URL; a.target = '_blank'; a.rel = 'noopener'; });
+const ext = (sel, url) => document.querySelectorAll(sel).forEach(a => { a.href = url; a.target = '_blank'; a.rel = 'noopener'; });
+ext('.whop', WHOP_URL);
+ext('.skill', SKILL_URL);
 
 // Shop: group by line
 const lines = [...new Set(PRODUCTS.map(p => p.line))];
