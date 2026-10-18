@@ -95,10 +95,19 @@ s { opacity: .6; margin-right: 6px; }
 .grid { columns: 2 180px; column-gap: 8px; }
 .grid img { margin-bottom: 8px; break-inside: avoid; }
 
-/* Video pair (artists) */
-.vids { display: grid; grid-template-columns: 1fr 1fr; }
-.vids video { aspect-ratio: 16/9; object-fit: cover; }
-@media (max-width: 600px) { .vids { grid-template-columns: 1fr; } .vids video + video { display: none; } }
+/* Media: home preview + media page */
+.mprev { display: grid; gap: 8px; margin-bottom: 24px; }
+.mprev a { position: relative; display: block; overflow: hidden; }
+.mprev video { aspect-ratio: 16/9; object-fit: cover; }
+.mprev span { position: absolute; left: 0; bottom: 0; background: var(--red); color: var(--white); padding: 6px 10px; font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+@media (min-width: 700px) { .mprev { grid-template-columns: repeat(3, 1fr); } .mprev video { aspect-ratio: 4/5; } }
+.media-page { padding-top: calc(var(--nav) + 28px); }
+.media-page .big { font-size: clamp(48px, 12vw, 160px); }
+.media-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-bottom: 56px; }
+.yt { aspect-ratio: 16/9; background: var(--red); color: var(--white); display: grid; place-items: center; font-size: 12px; font-weight: 700; letter-spacing: .14em; }
+.yt.short { aspect-ratio: 9/16; max-width: 320px; }
+.yt iframe { width: 100%; height: 100%; border: 0; }
+figcaption { padding-top: 10px; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
 
 /* Guestbook */
 .wall { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; margin-bottom: 40px; }
@@ -136,6 +145,7 @@ dialog > img { aspect-ratio: 3/4; object-fit: cover; max-height: 50svh; }
 .sizes input:checked + span { background: var(--red); color: var(--white); }
 .sizes input:focus-visible + span { outline: 2px solid var(--red); outline-offset: 2px; }
 .pdp-body .btn { text-align: center; }
-.x { position: absolute; top: 10px; right: 10px; z-index: 1; background: var(--white); color: var(--red); border: 0; width: 36px; height: 36px; cursor: pointer; font-size: 16px; }
+dialog > form { position: absolute; top: 10px; right: 10px; z-index: 1; }
+.x { background: var(--white); color: var(--red); border: 0; width: 36px; height: 36px; cursor: pointer; font-size: 16px; }
 
 @media (prefers-reduced-motion: reduce) { .ticker div { animation: none; } html { scroll-behavior: auto; } }
