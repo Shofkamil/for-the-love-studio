@@ -41,11 +41,17 @@ h2 { font-size: 13px; letter-spacing: .12em; margin-bottom: 24px; }
 
 /* Hero */
 .hero { position: relative; height: 100svh; overflow: hidden; }
-.hero video { height: 100%; object-fit: cover; }
+.hero > img { height: 100%; object-fit: cover; object-position: center 55%; }
 .hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(transparent 50%, var(--black)); }
 .hero-txt { position: absolute; left: 16px; right: 16px; bottom: 40px; z-index: 1; }
 .hero h1 { font-size: clamp(64px, 18vw, 240px); margin-bottom: 24px; }
 .ctas { display: flex; gap: 10px; flex-wrap: wrap; }
+
+/* Dance clip — shown at its own small size (source is 498×630) */
+.dance { display: grid; gap: 24px; justify-items: center; text-align: center; }
+.dance .big { margin: 0; }
+.dance-vid { position: relative; width: min(100%, 498px); }
+@media (min-width: 900px) { .dance { grid-template-columns: 1fr auto; align-items: end; justify-items: start; text-align: left; } .dance .big { font-size: 96px; } }
 
 /* Reels — vertical snap feed */
 .reels-wrap { height: 100svh; display: flex; flex-direction: column; padding-top: calc(var(--nav) + 28px); scroll-margin-top: calc(-1 * (var(--nav) + 28px)); }
