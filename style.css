@@ -99,7 +99,6 @@ s { opacity: .5; margin-right: 6px; }
 .artists .btn.red { background: var(--black); border-color: var(--black); }
 
 /* About */
-.about p:not(.big):not(.dim) { max-width: 520px; margin-bottom: 16px; opacity: .8; }
 
 /* Guestbook */
 .wall { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; margin-bottom: 40px; }
@@ -114,9 +113,8 @@ s { opacity: .5; margin-right: 6px; }
 
 /* Contact */
 .contact { background: var(--red); padding: 64px 16px; text-align: center; }
-.contact .mail { display: block; font-size: clamp(18px, 4.5vw, 56px); font-weight: 700; letter-spacing: -0.03em; word-break: break-all; margin-bottom: 20px; }
+.contact .mail { display: block; font-size: clamp(18px, 4.5vw, 56px); font-weight: 700; letter-spacing: -0.03em; word-break: break-all; }
 .contact .mail:hover { color: var(--black); }
-.contact .row { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
 
 .foot { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 24px 16px; font-size: 11px; letter-spacing: .1em; opacity: .6; }
 

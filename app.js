@@ -11,7 +11,7 @@ const PRODUCTS = [
 
 // Approved guestbook entries (signatures arrive by email; paste the good ones here).
 const GUESTBOOK = [
-  { name: 'Shof', city: 'Founder', ig: 'tagshof0', msg: 'For the love. Always.' },
+  { name: 'Shof', city: 'Founder', ig: 'tagshof0', msg: 'For the love, always' },
 ];
 // -------------------
 
