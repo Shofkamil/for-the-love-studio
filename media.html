@@ -4,46 +4,57 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Media — For The Love Studio</title>
-<meta name="description" content="Clothing and a home for independent artists. Drop 01 out now.">
+<meta name="description" content="Podcasts and videos from For The Love Studio.">
 <meta name="theme-color" content="#D0021B">
-<meta property="og:title" content="For The Love Studio">
-<meta property="og:image" content="assets/p8057.jpg">
-<link rel="icon" href="assets/dove.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="For The Love Studio">
+<meta property="og:title" content="Media — For The Love Studio">
+<meta property="og:description" content="Podcasts and videos from For The Love Studio.">
+<meta property="og:url" content="https://shofkamil.github.io/for-the-love-studio/media.html">
+<meta property="og:image" content="https://shofkamil.github.io/for-the-love-studio/assets/og-media.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/favicon.png">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="ticker" aria-hidden="true"><div>DROP 01 — LIMITED EDITION &nbsp;·&nbsp; NEW CLOTHING IS OUT NOW &nbsp;·&nbsp; DROP 01 — LIMITED EDITION &nbsp;·&nbsp; NEW CLOTHING IS OUT NOW &nbsp;·&nbsp; DROP 01 — LIMITED EDITION &nbsp;·&nbsp; NEW CLOTHING IS OUT NOW &nbsp;·&nbsp; DROP 01 — LIMITED EDITION &nbsp;·&nbsp; NEW CLOTHING IS OUT NOW &nbsp;·&nbsp; </div></div>
+<div class="ticker" aria-hidden="true"><div data-ticker></div></div>
 
 <header class="nav">
+  <div class="langs" aria-label="Language">
+    <button data-lang="ru">RU</button><button data-lang="en">EN</button><button data-lang="es">ES</button>
+  </div>
   <div class="menu">
-    <button class="burger" aria-expanded="false">MENU</button>
+    <button class="burger" aria-expanded="false" data-i18n="menu.open">Menu</button>
     <nav>
-      <a href="index.html#reels">Reels</a>
-      <a href="index.html#shop">Shop</a>
-      <a href="media.html">Media</a>
-      <a href="index.html#gallery">Gallery</a>
-      <a href="index.html#artists">Artists</a>
-      <a class="skill" href="#">Skill</a>
-      <a href="index.html#about">About</a>
-      <a href="index.html#shipping">Shipping</a>
-      <a href="index.html#guestbook">Guestbook</a>
-      <a href="index.html#contact">Contact Us</a>
+      <a href="media.html" data-i18n="nav.media" aria-current="page">Media</a>
+      <a href="index.html#shop" data-i18n="nav.shop">Shop</a>
+      <a href="index.html#artists" data-i18n="nav.artists">Artists</a>
+      <a href="index.html#about" data-i18n="nav.about">About</a>
     </nav>
   </div>
 </header>
 
 <main class="media-page">
   <section class="wrap">
-    <h1 class="big">MEDIA</h1>
+    <h1 class="big" data-i18n="media.title">Media</h1>
     <div id="media-list"></div>
   </section>
 </main>
 
 <footer class="foot">
-  <span>© 2026 For The Love Studio</span>
+  <a class="foot-mail" href="mailto:forthelovestudio2025@gmail.com">forthelovestudio2025@gmail.com</a>
+  <details class="policy">
+    <summary data-i18n="foot.shipping">Shipping &amp; orders</summary>
+    <div data-i18n-html="policy"></div>
+  </details>
+  <small>© 2026 For The Love Studio</small>
 </footer>
 
+<script src="i18n.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
