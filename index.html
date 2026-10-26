@@ -21,131 +21,103 @@
 </head>
 <body>
 
-<div class="ticker" aria-hidden="true"><div data-ticker></div></div>
-
 <header class="nav">
-  <div class="langs" aria-label="Language">
-    <button data-lang="ru">RU</button><button data-lang="en">EN</button><button data-lang="es">ES</button>
+  <div class="langs">
+    <button data-lang="ru" aria-label="Русский"><img src="assets/flag-ru.svg" alt=""></button>
+    <button data-lang="es" aria-label="Español"><img src="assets/flag-es.svg" alt=""></button>
+    <button data-lang="en" aria-label="English"><img src="assets/flag-gb.svg" alt=""></button>
   </div>
   <div class="menu">
     <button class="burger" aria-expanded="false" data-i18n="menu.open">Menu</button>
     <nav>
       <a href="media.html" data-i18n="nav.media">Media</a>
-      <a href="#shop" data-i18n="nav.shop">Shop</a>
-      <a href="#artists" data-i18n="nav.artists">Artists</a>
-      <a href="#about" data-i18n="nav.about">About</a>
+      <a href="index.html#collections" data-i18n="nav.collections">Collections</a>
+      <a href="index.html#artists" data-i18n="nav.artists">Artists</a>
+      <a href="index.html#universe" data-i18n="nav.universe">Studio Universe</a>
+      <a href="index.html#about" data-i18n="nav.about">About</a>
     </nav>
+  </div>
+  <div class="icons">
+    <button class="icon" data-open="auth" data-i18n-aria="signin.icon" aria-label="Sign in">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>
+    </button>
+    <button class="icon" data-open="bag" data-i18n-aria="bag.icon" aria-label="Bag">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 13H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+      <span class="count" data-bag-count hidden>0</span>
+    </button>
   </div>
 </header>
 
 <main id="top">
 
   <section class="hero">
-    <img class="hero-dove" src="assets/dove.svg" alt="For The Love Studio" width="1344" height="1422" fetchpriority="high">
-    <div class="hero-foot">
-      <span data-i18n="hero.brand">For The Love Studio</span>
-      <a href="#shop" data-i18n="hero.cta">Shop now ↓</a>
-    </div>
+    <img class="hero-dove" src="assets/dove.svg" alt="" width="1344" height="1422" fetchpriority="high">
+    <h1 data-i18n="hero.brand">For The Love Studio</h1>
+    <a class="btn" href="#collections" data-i18n="hero.cta">New Collections ↓</a>
   </section>
 
-  <section id="shop" class="reels-wrap">
-    <div class="reels-side">
-      <h2 data-i18n="nav.shop">Shop</h2>
-      <p data-i18n="shop.tap">Tap the tag to shop</p>
+  <section id="collections" class="wrap">
+    <h2 data-i18n="col.title">New Collections</h2>
+    <div class="shop">
+      <div class="filters" role="tablist">
+        <button data-cat="all" aria-pressed="true" data-i18n="col.all">All</button>
+        <button data-cat="sweatshirts" data-i18n="col.sweatshirts">Sweatshirts</button>
+        <button data-cat="pants" data-i18n="col.pants">Pants</button>
+      </div>
+      <div id="grid" class="products"></div>
     </div>
-    <div class="reels">
-      <article class="reel">
-        <video data-auto src="assets/closeup.mp4" poster="assets/closeup.jpg" muted loop playsinline preload="none"></video>
-        <h3 data-i18n-html="reel.craft"></h3>
-        <div class="tags"><button data-product="crewneck"></button></div>
-      </article>
-      <article class="reel">
-        <img src="assets/baad-2.jpg" alt="" loading="lazy">
-        <h3 data-i18n-html="reel.drop"></h3>
-        <div class="tags"><button data-product="crewneck"></button><button data-product="baad-pants"></button></div>
-      </article>
-      <article class="reel">
-        <video data-auto src="assets/street.mp4" poster="assets/street.jpg" muted loop playsinline preload="none"></video>
-        <h3 data-i18n-html="reel.loud"></h3>
-        <div class="tags"><button data-product="crewneck"></button></div>
-      </article>
-      <article class="reel">
-        <img src="assets/baad-3.jpg" alt="" loading="lazy">
-        <h3 data-i18n-html="reel.baad"></h3>
-        <div class="tags"><button data-product="baad-pants"></button></div>
-      </article>
-      <article class="reel">
+    <figure class="col-video">
+      <div class="vid">
         <video data-auto src="assets/dance.mp4" poster="assets/dance.jpg" muted loop playsinline preload="none"></video>
         <button class="sound" data-i18n="sound.off">Sound off</button>
-        <h3 data-i18n-html="reel.crew"></h3>
-        <div class="tags"><button data-product="crewneck"></button></div>
-      </article>
-      <article class="reel">
-        <img src="assets/p9278.jpg" alt="Be yourself" loading="lazy" class="contain">
-        <div class="tags"><button data-product="crewneck"></button></div>
-      </article>
-    </div>
-  </section>
-
-  <section class="wrap">
-    <div id="lines"></div>
+      </div>
+      <figcaption data-i18n="col.video">Shot with the crew in Barcelona</figcaption>
+    </figure>
   </section>
 
   <section id="artists" class="on-red">
     <div class="wrap">
       <h2 data-i18n="artists.title">For artists</h2>
-      <p class="big" data-i18n="artists.line">Are you an independent artist? Here we are.</p>
+      <p class="big" data-i18n="artists.line">Are you an independent artist? Here we can talk with you.</p>
       <div class="ctas">
-        <a class="btn red whop" href="#" data-i18n="artists.join">Join on WHOP →</a>
-        <a class="btn skill" href="#" data-i18n="artists.skill">Course →</a>
+        <a class="btn red" data-link="INSTAGRAM_DM" data-i18n="artists.talk">Let's talk →</a>
+        <a class="btn" data-link="COURSE_URL" data-i18n="artists.course">Course →</a>
+        <a class="btn" data-link="WHOP_URL" data-i18n="artists.join">Join on WHOP →</a>
       </div>
     </div>
   </section>
 
+  <section id="universe" class="wrap">
+    <h2 data-i18n="universe.title">Studio Universe</h2>
+    <p class="big" data-i18n="universe.line">For The Love Studio Members</p>
+    <a class="btn red" data-link="MEMBERS_URL" data-i18n="universe.cta">Become a member →</a>
+  </section>
+
   <section id="media" class="wrap">
     <h2 data-i18n="media.title">Media</h2>
-    <div class="mprev">
-      <a href="media.html"><video data-auto src="assets/pod2.mp4" poster="assets/pod2.jpg" muted loop playsinline preload="none"></video><span data-i18n="media.podcast">Podcast</span></a>
-      <a href="media.html"><video data-auto src="assets/pod1.mp4" poster="assets/pod1.jpg" muted loop playsinline preload="none"></video><span data-i18n="media.podcast">Podcast</span></a>
-      <a href="media.html"><video data-auto src="assets/talk.mp4" poster="assets/talk.jpg" muted loop playsinline preload="none"></video><span data-i18n="media.philosophy">Philosophy</span></a>
-    </div>
+    <div id="media-preview" class="mprev"></div>
     <a class="btn red" href="media.html" data-i18n="media.all">All media →</a>
   </section>
 
-  <section id="about" class="wrap about">
+  <section id="about" class="wrap">
     <h2 data-i18n="about.title">About</h2>
-    <div class="about-text" data-i18n-html="about.text"></div>
-    <p class="about-contact"><span data-i18n="about.contact">Contact</span> <a href="mailto:forthelovestudio2025@gmail.com">forthelovestudio2025@gmail.com</a></p>
+    <p class="big" data-i18n="about.line">From artists, for artists. Barcelona, 2025.</p>
+    <div class="social">
+      <a data-link="INSTAGRAM" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" class="fill"/></svg></a>
+      <a data-link="YOUTUBE" aria-label="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9l5 3-5 3z" class="fill"/></svg></a>
+    </div>
   </section>
 
 </main>
 
 <footer class="foot">
-  <a class="foot-mail" href="mailto:forthelovestudio2025@gmail.com">forthelovestudio2025@gmail.com</a>
-  <details class="policy">
-    <summary data-i18n="foot.shipping">Shipping &amp; orders</summary>
-    <div data-i18n-html="policy"></div>
-  </details>
+  <nav>
+    <button data-open="faq" data-i18n="foot.faq">FAQ</button>
+    <button data-open="track" data-i18n="foot.tracking">Order tracking</button>
+    <button data-open="cookies" data-i18n="foot.cookies">Cookie settings</button>
+  </nav>
   <small>© 2026 For The Love Studio</small>
 </footer>
-
-<dialog id="pdp">
-  <form method="dialog"><button class="x" data-i18n-aria="close" aria-label="Close">✕</button></form>
-  <img alt="">
-  <div class="pdp-body">
-    <small class="line"></small>
-    <h3 class="name"></h3>
-    <div class="note"></div>
-    <div class="price"></div>
-    <div class="sizes"></div>
-    <a class="btn red order" data-i18n="order.email">Pre-order by email</a>
-    <a class="btn dm" href="https://ig.me/m/forthelovestudio" target="_blank" rel="noopener" data-i18n="order.dm">Pre-order via DM</a>
-    <details class="policy">
-      <summary data-i18n="foot.shipping">Shipping &amp; orders</summary>
-      <div data-i18n-html="policy"></div>
-    </details>
-  </div>
-</dialog>
 
 <script src="i18n.js"></script>
 <script src="app.js"></script>

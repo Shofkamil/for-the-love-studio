@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Media — For The Love Studio</title>
-<meta name="description" content="Podcasts and videos from For The Love Studio.">
+<meta name="description" content="Reels and podcasts from For The Love Studio.">
 <meta name="theme-color" content="#D0021B">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="For The Love Studio">
 <meta property="og:title" content="Media — For The Love Studio">
-<meta property="og:description" content="Podcasts and videos from For The Love Studio.">
+<meta property="og:description" content="Reels and podcasts from For The Love Studio.">
 <meta property="og:url" content="https://shofkamil.github.io/for-the-love-studio/media.html">
 <meta property="og:image" content="https://shofkamil.github.io/for-the-love-studio/assets/og-media.jpg">
 <meta property="og:image:width" content="1200">
@@ -21,24 +21,34 @@
 </head>
 <body>
 
-<div class="ticker" aria-hidden="true"><div data-ticker></div></div>
-
 <header class="nav">
-  <div class="langs" aria-label="Language">
-    <button data-lang="ru">RU</button><button data-lang="en">EN</button><button data-lang="es">ES</button>
+  <div class="langs">
+    <button data-lang="ru" aria-label="Русский"><img src="assets/flag-ru.svg" alt=""></button>
+    <button data-lang="es" aria-label="Español"><img src="assets/flag-es.svg" alt=""></button>
+    <button data-lang="en" aria-label="English"><img src="assets/flag-gb.svg" alt=""></button>
   </div>
   <div class="menu">
     <button class="burger" aria-expanded="false" data-i18n="menu.open">Menu</button>
     <nav>
-      <a href="media.html" data-i18n="nav.media" aria-current="page">Media</a>
-      <a href="index.html#shop" data-i18n="nav.shop">Shop</a>
+      <a href="media.html" aria-current="page" data-i18n="nav.media">Media</a>
+      <a href="index.html#collections" data-i18n="nav.collections">Collections</a>
       <a href="index.html#artists" data-i18n="nav.artists">Artists</a>
+      <a href="index.html#universe" data-i18n="nav.universe">Studio Universe</a>
       <a href="index.html#about" data-i18n="nav.about">About</a>
     </nav>
   </div>
+  <div class="icons">
+    <button class="icon" data-open="auth" data-i18n-aria="signin.icon" aria-label="Sign in">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>
+    </button>
+    <button class="icon" data-open="bag" data-i18n-aria="bag.icon" aria-label="Bag">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 13H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+      <span class="count" data-bag-count hidden>0</span>
+    </button>
+  </div>
 </header>
 
-<main class="media-page">
+<main class="page">
   <section class="wrap">
     <h1 class="big" data-i18n="media.title">Media</h1>
     <div id="media-list"></div>
@@ -46,11 +56,11 @@
 </main>
 
 <footer class="foot">
-  <a class="foot-mail" href="mailto:forthelovestudio2025@gmail.com">forthelovestudio2025@gmail.com</a>
-  <details class="policy">
-    <summary data-i18n="foot.shipping">Shipping &amp; orders</summary>
-    <div data-i18n-html="policy"></div>
-  </details>
+  <nav>
+    <button data-open="faq" data-i18n="foot.faq">FAQ</button>
+    <button data-open="track" data-i18n="foot.tracking">Order tracking</button>
+    <button data-open="cookies" data-i18n="foot.cookies">Cookie settings</button>
+  </nav>
   <small>© 2026 For The Love Studio</small>
 </footer>
 
