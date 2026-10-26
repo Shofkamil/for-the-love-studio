@@ -22,20 +22,20 @@
 <body>
 
 <header class="nav">
-  <div class="langs">
-    <button data-lang="ru" aria-label="Русский"><img src="assets/flag-ru.svg" alt=""></button>
-    <button data-lang="es" aria-label="Español"><img src="assets/flag-es.svg" alt=""></button>
-    <button data-lang="en" aria-label="English"><img src="assets/flag-gb.svg" alt=""></button>
-  </div>
+  <a class="brand" href="index.html#top"><img src="assets/dove.svg" alt="" width="22" height="23">For The Love Studio</a>
   <div class="menu">
     <button class="burger" aria-expanded="false" data-i18n="menu.open">Menu</button>
     <nav>
       <a href="media.html" data-i18n="nav.media">Media</a>
       <a href="index.html#collections" data-i18n="nav.collections">Collections</a>
       <a href="index.html#artists" data-i18n="nav.artists">Artists</a>
-      <a href="index.html#universe" data-i18n="nav.universe">Studio Universe</a>
       <a href="index.html#about" data-i18n="nav.about">About</a>
     </nav>
+  </div>
+  <div class="langs">
+    <button data-lang="ru" aria-label="Русский"><img src="assets/flag-ru.svg" alt=""></button>
+    <button data-lang="es" aria-label="Español"><img src="assets/flag-es.svg" alt=""></button>
+    <button data-lang="en" aria-label="English"><img src="assets/flag-gb.svg" alt=""></button>
   </div>
   <div class="icons">
     <button class="icon" data-open="auth" data-i18n-aria="signin.icon" aria-label="Sign in">
@@ -53,7 +53,7 @@
   <section class="hero">
     <img class="hero-dove" src="assets/dove.svg" alt="" width="1344" height="1422" fetchpriority="high">
     <h1 data-i18n="hero.brand">For The Love Studio</h1>
-    <a class="btn" href="#collections" data-i18n="hero.cta">New Collections ↓</a>
+    <a class="go" href="#collections" data-i18n="hero.cta">New Collections ↓</a>
   </section>
 
   <section id="collections" class="wrap">
@@ -75,33 +75,25 @@
     </figure>
   </section>
 
-  <section id="artists" class="on-red">
-    <div class="wrap">
-      <h2 data-i18n="artists.title">For artists</h2>
-      <p class="big" data-i18n="artists.line">Are you an independent artist? Here we can talk with you.</p>
-      <div class="ctas">
-        <a class="btn red" data-link="INSTAGRAM_DM" data-i18n="artists.talk">Let's talk →</a>
-        <a class="btn" data-link="COURSE_URL" data-i18n="artists.course">Course →</a>
-        <a class="btn" data-link="WHOP_URL" data-i18n="artists.join">Join on WHOP →</a>
-      </div>
+  <section id="artists" class="wrap">
+    <h2 data-i18n="artists.title">For artists</h2>
+    <p data-i18n="artists.line">Are you an independent artist? Here we can talk with you.</p>
+    <div class="ctas">
+      <a class="go" data-link="INSTAGRAM_DM" data-i18n="artists.talk">Let's talk →</a>
+      <a class="go" data-link="COURSE_URL" data-i18n="artists.course">Course →</a>
+      <a class="go" data-link="WHOP_URL" data-i18n="artists.join">Join on WHOP →</a>
     </div>
-  </section>
-
-  <section id="universe" class="wrap">
-    <h2 data-i18n="universe.title">Studio Universe</h2>
-    <p class="big" data-i18n="universe.line">For The Love Studio Members</p>
-    <a class="btn red" data-link="MEMBERS_URL" data-i18n="universe.cta">Become a member →</a>
   </section>
 
   <section id="media" class="wrap">
     <h2 data-i18n="media.title">Media</h2>
     <div id="media-preview" class="mprev"></div>
-    <a class="btn red" href="media.html" data-i18n="media.all">All media →</a>
+    <a class="go" href="media.html" data-i18n="media.all">All media →</a>
   </section>
 
   <section id="about" class="wrap">
     <h2 data-i18n="about.title">About</h2>
-    <p class="big" data-i18n="about.line">From artists, for artists. Barcelona, 2025.</p>
+    <p data-i18n="about.line">From artists, for artists. Barcelona, 2025.</p>
     <div class="social">
       <a data-link="INSTAGRAM" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" class="fill"/></svg></a>
       <a data-link="YOUTUBE" aria-label="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9l5 3-5 3z" class="fill"/></svg></a>

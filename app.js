@@ -5,7 +5,6 @@ const CONFIG = {
   YOUTUBE: '',          // channel link; empty = YouTube icon hidden
   COURSE_URL: 'https://whop.com/joined/for-the-love-studio/courses-O8PvF68SjATrHJ/app/courses/cors_UnneQR3dB6jg8/lessons/lesn_xovOZA1YxGDb9/', // empty = button hidden
   WHOP_URL: 'https://whop.com/biz_onI9jbO3hUpNfg?a=saltysofa', // empty = button hidden
-  MEMBERS_URL: '',      // "Become a member →"; empty = button hidden
 
   // Shopify: put your store domain (e.g. 'forthelovestudio.myshopify.com') and the variant IDs
   // in PRODUCTS[].shopify. Then the bag button becomes "Checkout →" and sends the bag to Shopify.
@@ -20,20 +19,26 @@ const CONFIG = {
   FIREBASE: null,
 };
 
-// sale: 0.5 = -50%. imgs: [front, back]. cat: sweatshirts | pants.
+// sale: 0.5 = -50%. imgs: [front, back]. cat: sweatshirts | pants. soldOut: sizes shown crossed out.
+// A category with no products shows a "Coming soon" card.
 const PRODUCTS = [
   {
-    id: 'crewneck', cat: 'sweatshirts', name: 'For The Love Studio Crewneck', price: 95, sale: 0.5,
-    sizes: ['S', 'M', 'L', 'XL'], imgs: ['assets/p8057.jpg', 'assets/p8593.jpg'], details: 'details.crewneck',
-    shopify: { S: '', M: '', L: '', XL: '' }, // Shopify variant IDs per size
+    id: 'sweatshirt', cat: 'sweatshirts', name: 'For The Love Studio Sweatshirt', price: 95, sale: 0.5,
+    sizes: ['XS', 'S', 'M', 'L', 'XL'], soldOut: [], details: 'details.sweatshirt',
+    // PHOTOS NEEDED: front and back of the sweatshirt alone on a plain white background.
+    // These two are temporary (worn outdoors) — replace both paths when the white-background shots are ready.
+    imgs: ['assets/p8057.jpg', 'assets/p8593.jpg'],
+    shopify: { XS: '', S: '', M: '', L: '', XL: '' }, // Shopify variant IDs per size
   },
+  // For The Love Studio Pants: add here (cat: 'pants') with price + white-background front/back photos.
 ];
 const CATEGORIES = ['sweatshirts', 'pants'];
+const SOON = { sweatshirts: 'For The Love Studio Sweatshirt', pants: 'For The Love Studio Pants' }; // name on a "Coming soon" card
 
 // Media page. Each video: title + caption in three languages. vertical: true for 9:16 clips.
 const MEDIA = [
   { cat: 'reels', src: 'closeup', vertical: true, title: 'Close Up',
-    cap: { en: 'The red crewneck up close', ru: 'Красный свитшот крупным планом', es: 'La sudadera roja de cerca' } },
+    cap: { en: 'The red sweatshirt up close', ru: 'Красный свитшот крупным планом', es: 'La sudadera roja de cerca' } },
   { cat: 'reels', src: 'street', vertical: true, title: 'Wear It Loud',
     cap: { en: 'Out in the city', ru: 'Прогулка по городу', es: 'Por la ciudad' } },
   { cat: 'reels', src: 'dance', vertical: true, title: 'Move Together',
@@ -62,16 +67,18 @@ const CURRENCIES = { EUR: 'EUR', USD: 'USD', GBP: 'GBP' };
 let currency = store.get('currency', 'EUR');
 const finalPrice = p => p.sale ? Math.round(p.price * (1 - p.sale) * 100) / 100 : p.price;
 const conv = eur => Math.round(eur * CONFIG.RATES[currency] * 100) / 100; // unit price in the chosen currency
-const fmt = v => new Intl.NumberFormat(lang === 'en' ? 'en-IE' : lang, { style: 'currency', currency }).format(v);
+const LOCALE = { EUR: 'en-IE', USD: 'en-US', GBP: 'en-GB' }; // English formatting per currency ($95, £80)
+const fmt = v => new Intl.NumberFormat(lang === 'en' ? LOCALE[currency] : lang, { style: 'currency', currency }).format(v);
 const money = eur => fmt(conv(eur));
-const priceHTML = p => p.sale ? `<s>${money(p.price)}</s> ${money(finalPrice(p))}` : money(p.price);
+const priceHTML = p => p.sale ? `<s>${money(p.price)}</s> <span class="now">${money(finalPrice(p))}</span>` : money(p.price);
 console.assert(finalPrice({ price: 95, sale: 0.5 }) === 47.5, 'sale math');
 console.assert(LANGS.every(l => Object.keys(I18N.en).every(k => k in I18N[l])), 'missing translation');
 
-// Country → currency for the welcome popup
-const COUNTRIES = ['ES', 'GB', 'US', 'RU', 'DE', 'FR', 'IT', 'PT', 'NL', 'LT', 'PL', 'UA', 'KZ', 'AE'];
-const currencyFor = c => c === 'US' ? 'USD' : c === 'GB' ? 'GBP' : 'EUR';
-const countryName = c => { try { return new Intl.DisplayNames([lang], { type: 'region' }).of(c); } catch { return c; } };
+// Default currency from the browser region (US → $, GB → £, else €); the bag lets people switch.
+if (!store.get('currency')) {
+  const region = (navigator.languages || [navigator.language]).map(l => l.split('-')[1]).find(Boolean);
+  currency = region === 'US' ? 'USD' : region === 'GB' ? 'GBP' : 'EUR';
+}
 
 // Links from CONFIG: empty link = element hidden
 document.querySelectorAll('[data-link]').forEach(a => {
@@ -91,20 +98,14 @@ document.body.insertAdjacentHTML('beforeend', `
   <form class="form" id="track-form"><h3 data-i18n="foot.tracking"></h3>
     <label><span data-i18n="track.label"></span><input name="n" required autocomplete="off"></label>
     <button class="btn red" data-i18n="track.go"></button><small data-i18n="track.note"></small></form></dialog>
-<dialog id="welcome" class="modal small"><form class="form" id="welcome-form"><h3 data-i18n="welcome.title"></h3>
-  <label><span data-i18n="welcome.country"></span><select name="country"></select></label>
-  <label><span data-i18n="welcome.lang"></span><select name="lang"><option value="ru">Русский</option><option value="es">Español</option><option value="en">English</option></select></label>
-  <button class="btn red" data-i18n="welcome.go"></button></form></dialog>
 <dialog id="cookies" class="modal small">${CLOSE}<form class="form" id="cookie-form"><h3 data-i18n="foot.cookies"></h3>
   <label class="check"><input type="checkbox" checked disabled><span><b data-i18n="cookie.necessary"></b> · <span data-i18n="cookie.always"></span></span></label>
   <label class="check"><input type="checkbox" name="analytics"><span><b data-i18n="cookie.analytics"></b></span></label>
   <button class="btn red" data-i18n="cookie.save"></button></form></dialog>
-<div id="cookiebar" class="cookiebar" hidden><p data-i18n="cookie.text"></p>
-  <div class="ctas"><button class="btn red" data-cookie="all" data-i18n="cookie.accept"></button><button class="btn" data-open="cookies" data-i18n="cookie.prefs"></button></div></div>
 <div id="toast" class="toast" role="status" hidden></div>`);
 
 const toast = msg => { const el = $('toast'); el.textContent = msg; el.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(() => { el.hidden = true; }, 3500); };
-document.querySelectorAll('dialog').forEach(d => d.addEventListener('click', e => { if (e.target === d && d.id !== 'welcome') d.close(); }));
+document.querySelectorAll('dialog').forEach(d => d.addEventListener('click', e => { if (e.target === d) d.close(); }));
 
 // ---------- Rendering (redrawn on language / currency change) ----------
 let filter = 'all';
@@ -126,7 +127,7 @@ function render() {
           ${p.sale ? `<span class="badge">-${Math.round(p.sale * 100)}%</span>` : ''}</div>
         <div class="meta"><span>${esc(p.name)}</span><span>${priceHTML(p)}</span></div>
       </button>`).join('') + empty.map(c => `
-      <div class="card soon"><div class="ph"><span>${t('col.soon')}</span><i class="mark"></i></div><div class="meta"><span>${t('col.' + c)}</span></div></div>`).join('');
+      <div class="card soon"><div class="ph"><span>${t('col.soon')}</span><i class="mark"></i></div><div class="meta"><span>${SOON[c]}</span></div></div>`).join('');
     document.querySelectorAll('[data-cat]').forEach(b => b.setAttribute('aria-pressed', b.dataset.cat === filter));
   }
 
@@ -137,7 +138,7 @@ function render() {
   }
   if ($('media-list')) {
     $('media-list').innerHTML = ['reels', 'podcasts'].map(cat => `
-      <div class="line-head">${t('media.' + cat)}</div>
+      <h2>${t('media.' + cat)}</h2>
       <div class="media-grid ${cat}">${MEDIA.filter(m => m.cat === cat).map(m => `
         <figure class="${m.vertical ? 'v' : ''}">${video(m, true)}
           <figcaption><b>${esc(m.title)}</b><span>${esc(m.cap[lang] || m.cap.en)}</span></figcaption></figure>`).join('')}</div>`).join('');
@@ -145,10 +146,6 @@ function render() {
 
   $('faq').querySelector('.faq-body').innerHTML = `<h3>${t('foot.faq')}</h3>` +
     t('faq').map(([q, a]) => `<details><summary>${q}</summary><p>${a}</p></details>`).join('');
-  const sel = $('welcome-form').country;
-  const picked = sel.value || store.get('country', 'ES');
-  sel.innerHTML = COUNTRIES.map(c => `<option value="${c}">${countryName(c)}</option>`).join('');
-  sel.value = picked;
 
   renderBag();
   if ($('pdp').open) fillProduct();
@@ -172,9 +169,11 @@ function fillProduct() {
     ${current.sale ? `<span class="badge static">-${Math.round(current.sale * 100)}%</span>` : ''}
     <h3>${esc(current.name)}</h3>
     <div class="price">${priceHTML(current)}</div>
-    <div class="sizes" role="radiogroup" aria-label="${t('pdp.size')}">${current.sizes.map(s =>
-      `<label><input type="radio" name="size" value="${s}" ${s === size ? 'checked' : ''}><span>${s}</span></label>`).join('')}</div>
+    <div class="sizes" role="radiogroup" aria-label="${t('pdp.size')}">${current.sizes.map(s => {
+      const out = current.soldOut?.includes(s);
+      return `<label class="${out ? 'out' : ''}"><input type="radio" name="size" value="${s}" ${s === size ? 'checked' : ''} ${out ? 'disabled' : ''}><span>${s}</span></label>`; }).join('')}</div>
     <button class="btn red" data-add>${t('pdp.add')}</button>
+    <button class="go" data-dm-item>${t('pdp.dm')}</button>
     <small>${t('final')}</small>
     <ul class="details">${t(current.details).map(l => `<li>${esc(l)}</li>`).join('')}</ul>`;
 }
@@ -182,9 +181,13 @@ document.addEventListener('click', e => {
   const card = e.target.closest('[data-product]');
   if (card) {
     current = PRODUCTS.find(p => p.id === card.dataset.product);
-    size = current.sizes[1];
+    size = current.sizes.find(s => s === 'M' && !current.soldOut?.includes(s)) || current.sizes.find(s => !current.soldOut?.includes(s));
     fillProduct();
     $('pdp').showModal();
+  }
+  if (e.target.closest('[data-dm-item]')) {
+    preorderDM([{ id: current.id, size, qty: 1 }]);
+    $('pdp').close();
   }
   if (e.target.closest('[data-add]')) {
     addToBag(current.id, size);
@@ -210,7 +213,7 @@ const shopifyUrl = () => {
   const parts = bag.map(i => product(i.id).shopify?.[i.size] && `${product(i.id).shopify[i.size]}:${i.qty}`);
   return parts.every(Boolean) ? `https://${CONFIG.SHOPIFY_STORE_DOMAIN}/cart/${parts.join(',')}` : '';
 };
-console.assert((() => { const b = bag, d = CONFIG.SHOPIFY_STORE_DOMAIN; bag = [{ id: 'crewneck', size: 'M', qty: 2 }]; CONFIG.SHOPIFY_STORE_DOMAIN = 'x.myshopify.com';
+console.assert((() => { const b = bag, d = CONFIG.SHOPIFY_STORE_DOMAIN; bag = [{ id: 'sweatshirt', size: 'M', qty: 2 }]; CONFIG.SHOPIFY_STORE_DOMAIN = 'x.myshopify.com';
   PRODUCTS[0].shopify.M = '123'; const ok = shopifyUrl() === 'https://x.myshopify.com/cart/123:2'; PRODUCTS[0].shopify.M = ''; bag = b; CONFIG.SHOPIFY_STORE_DOMAIN = d; return ok; })(), 'shopify url');
 
 function renderBag() {
@@ -233,15 +236,17 @@ $('bag').addEventListener('click', async e => {
   if (cur) { currency = cur.dataset.currency; store.set('currency', currency); render(); return; }
   const rm = e.target.closest('[data-remove]');
   if (rm) { bag.splice(+rm.dataset.remove, 1); saveBag(); return; }
-  if (e.target.closest('[data-dm]')) {
-    const text = `${t('bag.order')}:\n` + bag.map(i => `${product(i.id).name} — ${t('bag.size')} ${i.size} ×${i.qty} — ${fmt(lineTotal(i))}`).join('\n')
-      + `\n${t('bag.total')}: ${fmt(bagTotal())}`;
-    try { await navigator.clipboard.writeText(text); } catch {}
-    window.open(CONFIG.INSTAGRAM_DM, '_blank', 'noopener');
-    $('bag').close();
-    toast(t('bag.copied'));
-  }
+  if (e.target.closest('[data-dm]')) { preorderDM(bag); $('bag').close(); }
 });
+
+// Pre-order via DM: copy the order text, open Instagram DM (ig.me can't prefill text)
+async function preorderDM(items) {
+  const text = `${t('bag.order')}:\n` + items.map(i => `${product(i.id).name} — ${t('bag.size')} ${i.size} ×${i.qty} — ${fmt(lineTotal(i))}`).join('\n')
+    + `\n${t('bag.total')}: ${fmt(Math.round(items.reduce((s, i) => s + lineTotal(i), 0) * 100) / 100)}`;
+  try { await navigator.clipboard.writeText(text); } catch {}
+  window.open(CONFIG.INSTAGRAM_DM, '_blank', 'noopener');
+  toast(t('bag.copied'));
+}
 
 // ---------- Dialog openers ----------
 document.addEventListener('click', e => {
@@ -260,21 +265,8 @@ $('track-form').addEventListener('submit', e => {
   window.open(`https://t.17track.net/en#nums=${encodeURIComponent(e.target.n.value.trim())}`, '_blank', 'noopener');
 });
 
-// ---------- First visit: country + language, then cookies ----------
-const showCookiebar = () => { if (!store.get('consent')) $('cookiebar').hidden = false; };
-$('welcome').addEventListener('cancel', e => e.preventDefault()); // first-visit choice is required
-$('welcome-form').addEventListener('change', e => { if (e.target.name === 'lang') setLang(e.target.value); });
-$('welcome-form').addEventListener('submit', e => {
-  e.preventDefault();
-  const c = e.target.country.value;
-  store.set('country', c);
-  currency = currencyFor(c); store.set('currency', currency);
-  setLang(e.target.lang.value, true);
-  $('welcome').close();
-  showCookiebar();
-});
-const saveConsent = analytics => { store.set('consent', { analytics, at: Date.now() }); $('cookiebar').hidden = true; };
-$('cookiebar').addEventListener('click', e => { if (e.target.closest('[data-cookie="all"]')) saveConsent(true); });
+// ---------- Cookie settings (from the footer only, no popup on entry) ----------
+const saveConsent = analytics => store.set('consent', { analytics, at: Date.now() });
 $('cookie-form').addEventListener('submit', e => { e.preventDefault(); saveConsent(e.target.analytics.checked); $('cookies').close(); });
 
 // ---------- Sign in (Firebase, loaded only when configured) ----------
@@ -295,16 +287,16 @@ function renderAuth() {
         <label class="check"><input type="radio" name="role" value="customer" checked><span>${t('auth.customer')}</span></label>
         <label class="check"><input type="radio" name="role" value="artist"><span>${t('auth.artist')}</span></label></div>` : ''}
       ${authError ? `<p class="error" role="alert">${t(authError)}</p>` : ''}
-      <button class="btn red">${t(authMode === 'signup' ? 'auth.create' : 'auth.signin')} →</button>
-      <button type="button" class="btn" data-google>${t('auth.google')}</button>
+      <button class="btn red">${t(authMode === 'signup' ? 'auth.create' : 'auth.signin')}</button>
+      <button type="button" class="go" data-google>${t('auth.google')}</button>
     </form>`;
 
   const acc = $('account');
-  if (acc) acc.innerHTML = !CONFIG.FIREBASE ? `<p class="big">${t('auth.soon')}</p>`
+  if (acc) acc.innerHTML = !CONFIG.FIREBASE ? `<p>${t('auth.soon')}</p>`
     : user ? `<dl class="acct"><dt>${t('auth.email')}</dt><dd>${esc(user.email || '')}</dd>
         <dt>${t('auth.role')}</dt><dd>${role ? t('role.' + role) : '—'}</dd></dl>
         <button class="btn red" data-signout>${t('auth.signout')}</button>`
-    : `<button class="btn red" data-open="auth">${t('auth.signin')} →</button>`;
+    : `<button class="btn red" data-open="auth">${t('auth.signin')}</button>`;
 }
 $('auth').addEventListener('click', async e => {
   const m = e.target.closest('[data-mode]');
@@ -358,5 +350,3 @@ menu.querySelectorAll('nav a').forEach(a => a.addEventListener('click', () => to
 // ---------- Start ----------
 const browserLang = (navigator.languages || [navigator.language]).map(l => l.slice(0, 2)).find(l => LANGS.includes(l));
 setLang(store.get('lang') || browserLang);
-if (!store.get('country')) { $('welcome-form').lang.value = lang; $('welcome').showModal(); }
-else showCookiebar();
